@@ -5,23 +5,23 @@ Además de ser útil, este proyecto también pone en práctica conceptos importa
 
 Funcionales:
 
-Agregar un curso con su nota.
+    -Agregar un curso con su nota.
 
-Ver todas las notas guardadas.
+    -Ver todas las notas guardadas.
 
-Cambiar la nota de un curso.
+    -Cambiar la nota de un curso.
 
-Borrar un curso con su nota.
+    -Borrar un curso con su nota.
 
 No funcionales:
 
-El programa se va a usar desde la consola y estará hecho en Python.
+    -El programa se va a usar desde la consola y estará hecho en Python.
 
-No va a usar librerías externas.
+    -No va a usar librerías externas.
 
-Va a funcionar con bucles y condicionales.
+    -Va a funcionar con bucles y condicionales.
 
-Antes de hacerlo, se va a escribir todo en pseudocódigo.
+    -Antes de hacerlo, se va a escribir todo en pseudocódigo.
 
 INICIO
     MIENTRAS opcion != 6 HACER
