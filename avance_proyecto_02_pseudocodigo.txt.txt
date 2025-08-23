@@ -1,0 +1,80 @@
+// Algoritmo para registrar notas de cursos
+Algoritmo controlNotas
+j <- 1
+acumulado <- 0
+detalle <- ""
+Escribir "¿Cuántos cursos desea ingresar?"
+Leer cantidad
+
+Mientras j <= cantidad Hacer
+    // función para pedir el nombre del curso
+    curso <- pedirNombre(j)
+    // función para pedir la nota del curso
+    calificacion <- pedirNota(j)
+    // proceso para mostrar los datos recién capturados
+    mostrarCurso(j, curso, calificacion)
+    
+    acumulado <- acumulado + calificacion
+    
+    // se arma un texto acumulativo con los datos
+    detalle <- detalle + "Curso " + ConvertirATexto(j) + ": " + curso + " | Nota = " + ConvertirATexto(calificacion) + "; "
+    
+    j <- j + 1
+FinMientras
+
+// se calcula el promedio general
+prom <- calcularPromedio(acumulado, cantidad)
+
+// se consulta si quiere ver resumen
+Repetir
+    Escribir "¿Desea ver el informe completo? (s/n)"
+    Leer opcion
+    Si opcion = "s" Entonces
+        informe(detalle, prom)
+    SiNo
+        Si opcion = "n" Entonces
+            Escribir "Programa finalizado..."
+        FinSi
+    FinSi
+Hasta Que opcion <> ""
+FinAlgoritmo
+
+
+// Función para ingresar nombre
+Funcion curso = pedirNombre(num)
+    Repetir
+        Escribir "Ingrese el nombre del curso número " num ":"
+        Leer curso
+    Hasta Que curso <> ""
+FinFuncion
+
+
+// Función para ingresar nota
+Funcion calificacion = pedirNota(num)
+    Repetir
+        Escribir "Ingrese la nota del curso " num " (0-100):"
+        Leer calificacion
+    Hasta Que calificacion >= 0 Y calificacion <= 100
+FinFuncion
+
+
+// Proceso para mostrar el curso y su nota
+SubProceso mostrarCurso(num, curso, calificacion)
+    Escribir "Curso " num " → " curso " | Nota: " calificacion
+FinSubProceso
+
+
+// Función para calcular promedio
+Funcion prom = calcularPromedio(acumulado, cantidad)
+    prom <- acumulado / cantidad
+FinFuncion
+
+
+// Proceso para mostrar resumen general
+SubProceso informe(detalle, prom)
+    Escribir "--------------------------"
+    Escribir "RESUMEN DE CURSOS Y NOTAS:"
+    Escribir detalle
+    Escribir "Promedio General = " prom
+    Escribir "--------------------------"
+FinSubProceso
