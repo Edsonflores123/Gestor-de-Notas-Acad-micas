@@ -52,3 +52,20 @@ INICIO
         FIN_SI
     FIN_MIENTRAS
 FIN
+
+
+
+Preguntas personales.
+
+
+¿Qué aprendí con este proyecto?
+
+Aprendí a aplicar los conceptos de programación orientada a objetos de una forma práctica. Pude entender mejor cómo usar clases, objetos, atributos y métodos para organizar el código y hacerlo más claro. También comprendí la importancia de separar la lógica en diferentes partes, por ejemplo, una clase para los cursos y otra para gestionarlos, lo que hace que el programa sea más fácil de mantener y ampliar.
+
+¿Qué fue lo más desafiante de resolver?
+
+Lo más desafiante fue estructurar el programa usando clases en lugar de solo funciones y listas. Al principio costó un poco entender cómo hacer que los métodos se comunicaran entre sí y cómo manejar los datos dentro de los objetos. También fue un reto pensar en la mejor forma de mostrar la información de los cursos y asegurar que todo funcionara correctamente sin errores.
+
+¿Qué mejoraría si tuviera más tiempo?
+
+Si tuviera más tiempo, mejoraría el programa agregando una interfaz más interactiva, o incluso una pequeña base de datos para guardar los cursos y notas de forma permanente. También implementaría validaciones más completas y tal vez un sistema de reportes con promedios o estadísticas. En general, me gustaría hacerlo más visual y fácil de usar.
