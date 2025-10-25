@@ -1,0 +1,343 @@
+Proceso Gestor_Notas_Simple
+
+    Definir mis_asignaturas, mis_notas, historial, solicitudes Como Lista
+    mis_asignaturas <- []
+    mis_notas <- []
+    historial <- []
+    solicitudes <- []
+
+    Repetir
+        Mostrar_Menu()
+        Escribir "Elija opción: "
+        Leer op
+
+        Segun op Hacer
+            1:
+                Agregar_Asignatura()
+            2:
+                Listar_Asignaturas()
+            3:
+                Calcular_Promedio()
+            4:
+                Aprobadas_Reprobadas()
+            5:
+                Buscar_Asignatura()
+            6:
+                Cambiar_Nota()
+            7:
+                Borrar_Asignatura()
+            8:
+                Ordenar_Por_Nota()
+            9:
+                Ordenar_Por_Nombre()
+            10:
+                Buscar_Binaria()
+            11:
+                Simular_Solicitud()
+            12:
+                Ver_Historial()
+            13:
+                Escribir "Saliendo del programa..."
+                Salir
+            De Otro Modo:
+                Escribir "Opción inválida"
+        FinSegun
+    Hasta Falso
+
+FinProceso
+
+
+SubProceso Mostrar_Menu()
+    Escribir ""
+    Escribir "***** GESTOR DE NOTAS SIMPLE *****"
+    Escribir "1. Agregar asignatura"
+    Escribir "2. Listar asignaturas"
+    Escribir "3. Calcular promedio"
+    Escribir "4. Aprobadas / Reprobadas"
+    Escribir "5. Buscar asignatura"
+    Escribir "6. Cambiar nota"
+    Escribir "7. Borrar asignatura"
+    Escribir "8. Ordenar por nota"
+    Escribir "9. Ordenar por nombre"
+    Escribir "10. Búsqueda binaria"
+    Escribir "11. Simular solicitudes"
+    Escribir "12. Ver historial"
+    Escribir "13. Salir"
+    Escribir "*********************************"
+FinSubProceso
+
+
+SubProceso Agregar_Asignatura()
+    Definir nombre Como Cadena
+    Definir nota Como Real
+
+    Escribir "Nombre de la asignatura: "
+    Leer nombre
+
+    Si nombre EstáEn mis_asignaturas Entonces
+        Escribir "Ya existe esa asignatura."
+        SalirSubproceso
+    FinSi
+
+    Escribir "Nota: "
+    Leer nota
+
+    Si nota >= 0 Y nota <= 100 Entonces
+        AgregarElemento(mis_asignaturas, nombre)
+        AgregarElemento(mis_notas, nota)
+        Escribir nombre, " agregada con nota ", nota
+    Sino
+        Escribir "Nota inválida."
+    FinSi
+FinSubProceso
+
+
+SubProceso Listar_Asignaturas()
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos ni notas registradas."
+        SalirSubproceso
+    FinSi
+
+    Escribir "--- LISTA DE ASIGNATURAS ---"
+    Para i <- 0 Hasta Longitud(mis_asignaturas)-1 Con Paso 1
+        Escribir mis_asignaturas[i], " -> ", mis_notas[i]
+    FinPara
+    Escribir "-----------------------------"
+FinSubProceso
+
+
+SubProceso Calcular_Promedio()
+    Si Longitud(mis_notas) = 0 Entonces
+        Escribir "No hay cursos ni notas registradas."
+        SalirSubproceso
+    FinSi
+
+    suma <- 0
+    Para cada nota en mis_notas Hacer
+        suma <- suma + nota
+    FinPara
+
+    prom <- suma / Longitud(mis_notas)
+    Escribir "Promedio: ", prom
+FinSubProceso
+
+
+SubProceso Aprobadas_Reprobadas()
+    Definir aprobadas, reprobadas Como Lista
+    aprobadas <- []
+    reprobadas <- []
+
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos ni notas registradas."
+        SalirSubproceso
+    FinSi
+
+    Para i <- 0 Hasta Longitud(mis_asignaturas)-1 Con Paso 1
+        Si mis_notas[i] >= 61 Entonces
+            AgregarElemento(aprobadas, mis_asignaturas[i])
+        Sino
+            AgregarElemento(reprobadas, mis_asignaturas[i])
+        FinSi
+    FinPara
+
+    Escribir "Aprobadas: ", aprobadas
+    Escribir "Reprobadas: ", reprobadas
+FinSubProceso
+
+
+SubProceso Buscar_Asignatura()
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos registrados."
+        SalirSubproceso
+    FinSi
+
+    Definir nombre Como Cadena
+    Escribir "Asignatura a buscar: "
+    Leer nombre
+
+    encontrado <- Falso
+
+    Para i <- 0 Hasta Longitud(mis_asignaturas)-1 Con Paso 1
+        Si mis_asignaturas[i] = nombre Entonces
+            estado <- "Aprobada"
+            Si mis_notas[i] < 61 Entonces
+                estado <- "Reprobada"
+            FinSi
+            Escribir nombre, " -> ", mis_notas[i], " (", estado, ")"
+            encontrado <- Verdadero
+        FinSi
+    FinPara
+
+    Si No encontrado Entonces
+        Escribir "No encontrada."
+    FinSi
+FinSubProceso
+
+
+SubProceso Cambiar_Nota()
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos registrados."
+        SalirSubproceso
+    FinSi
+
+    Escribir "Asignatura: "
+    Leer nombre
+
+    encontrado <- Falso
+
+    Para i <- 0 Hasta Longitud(mis_asignaturas)-1 Con Paso 1
+        Si mis_asignaturas[i] = nombre Entonces
+            Escribir "Nota actual: ", mis_notas[i]
+            Escribir "Nueva nota: "
+            Leer nueva
+
+            Si nueva >= 0 Y nueva <= 100 Entonces
+                AgregarElemento(historial, Concatenar(nombre, ": ", ConvertirATexto(mis_notas[i]), " -> ", ConvertirATexto(nueva)))
+                mis_notas[i] <- nueva
+                Escribir "Nota actualizada."
+            Sino
+                Escribir "Nota inválida."
+            FinSi
+            encontrado <- Verdadero
+        FinSi
+    FinPara
+
+    Si No encontrado Entonces
+        Escribir "Asignatura no encontrada."
+    FinSi
+FinSubProceso
+
+
+SubProceso Borrar_Asignatura()
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos registrados."
+        SalirSubproceso
+    FinSi
+
+    Escribir "Asignatura a borrar: "
+    Leer nombre
+
+    encontrado <- Falso
+
+    Para i <- 0 Hasta Longitud(mis_asignaturas)-1 Con Paso 1
+        Si mis_asignaturas[i] = nombre Entonces
+            EliminarElemento(mis_asignaturas, i)
+            EliminarElemento(mis_notas, i)
+            Escribir nombre, " eliminada."
+            encontrado <- Verdadero
+            Romper
+        FinSi
+    FinPara
+
+    Si No encontrado Entonces
+        Escribir "No encontrada."
+    FinSi
+FinSubProceso
+
+
+SubProceso Ordenar_Por_Nota()
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos ni notas registradas."
+        SalirSubproceso
+    FinSi
+
+    n <- Longitud(mis_notas)
+    Para i <- 0 Hasta n-1
+        Para j <- 0 Hasta n-i-2
+            Si mis_notas[j] > mis_notas[j+1] Entonces
+                aux <- mis_notas[j]
+                mis_notas[j] <- mis_notas[j+1]
+                mis_notas[j+1] <- aux
+
+                aux2 <- mis_asignaturas[j]
+                mis_asignaturas[j] <- mis_asignaturas[j+1]
+                mis_asignaturas[j+1] <- aux2
+            FinSi
+        FinPara
+    FinPara
+
+    Escribir "Asignaturas ordenadas por nota:"
+    Listar_Asignaturas()
+FinSubProceso
+
+
+SubProceso Ordenar_Por_Nombre()
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos ni notas registradas."
+        SalirSubproceso
+    FinSi
+
+    n <- Longitud(mis_asignaturas)
+    Para i <- 0 Hasta n-1
+        Para j <- 0 Hasta n-i-2
+            Si mis_asignaturas[j] > mis_asignaturas[j+1] Entonces
+                aux <- mis_asignaturas[j]
+                mis_asignaturas[j] <- mis_asignaturas[j+1]
+                mis_asignaturas[j+1] <- aux
+
+                aux2 <- mis_notas[j]
+                mis_notas[j] <- mis_notas[j+1]
+                mis_notas[j+1] <- aux2
+            FinSi
+        FinPara
+    FinPara
+
+    Escribir "Asignaturas ordenadas alfabéticamente:"
+    Listar_Asignaturas()
+FinSubProceso
+
+
+SubProceso Buscar_Binaria()
+    Si Longitud(mis_asignaturas) = 0 Entonces
+        Escribir "No hay cursos registrados."
+        SalirSubproceso
+    FinSi
+
+    Ordenar_Por_Nombre()
+
+    Escribir "Asignatura a buscar: "
+    Leer nombre
+
+    izq <- 0
+    der <- Longitud(mis_asignaturas) - 1
+    encontrado <- Falso
+
+    Mientras izq <= der Hacer
+        medio <- Trunc((izq + der) / 2)
+        Si mis_asignaturas[medio] = nombre Entonces
+            Escribir "Encontrada: ", mis_asignaturas[medio], " -> ", mis_notas[medio]
+            encontrado <- Verdadero
+            Romper
+        Sino
+            Si nombre < mis_asignaturas[medio] Entonces
+                der <- medio - 1
+            Sino
+                izq <- medio + 1
+            FinSi
+        FinSi
+    FinMientras
+
+    Si No encontrado Entonces
+        Escribir "No encontrada."
+    FinSi
+FinSubProceso
+
+
+SubProceso Simular_Solicitud()
+    Escribir "Asignatura solicitada: "
+    Leer nombre
+    AgregarElemento(solicitudes, nombre)
+    Escribir "Solicitud simulada: ", solicitudes
+FinSubProceso
+
+
+SubProceso Ver_Historial()
+    Si Longitud(historial) = 0 Entonces
+        Escribir "Historial vacío."
+        SalirSubproceso
+    FinSi
+
+    Para i <- Longitud(historial)-1 Hasta 0 Con Paso -1
+        Escribir historial[i]
+    FinPara
+FinSubProceso
