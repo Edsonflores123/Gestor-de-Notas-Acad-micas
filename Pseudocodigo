@@ -1,4 +1,4 @@
-Proceso Gestor_Notas_Simple
+Proceso Gestor_Notas
 
     Definir mis_asignaturas, mis_notas, historial, solicitudes Como Lista
     mis_asignaturas <- []
